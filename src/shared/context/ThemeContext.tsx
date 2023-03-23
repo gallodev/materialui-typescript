@@ -5,8 +5,6 @@ import { DarkTheme, LightTheme } from '../themes';
 export interface IThemeContextData {
     themeName: 'light' | 'dark';
     toggleTheme: () => void
-    name: string,
-    handleChangeName: (name: string) => void
 }
 
 export const ThemeContext = createContext({} as IThemeContextData);
@@ -21,7 +19,6 @@ export const useTheme = () => {
 
 export const AppThemeProvider = ({children}: IAppThemeProviderProps) => {
   const [themeName,setThemeName] = useState<'light' | 'dark'>('light');
-  const [name,setName] = useState('');
 
   const toggleTheme = useCallback(() => {
     setThemeName(oldThemeName => oldThemeName === 'light' ? 'dark' : 'light');
@@ -33,13 +30,9 @@ export const AppThemeProvider = ({children}: IAppThemeProviderProps) => {
         
     return DarkTheme;
   },[themeName]);
-
-  const handleChangeName = (name: string) => {
-    setName(name);
-  };
-
+  
   return (
-    <ThemeContext.Provider value={{themeName,toggleTheme,name,handleChangeName}}>
+    <ThemeContext.Provider value={{themeName,toggleTheme}}>
       <ThemeProvider theme={theme}>
         <Box width='100vw' height='100vh' bgcolor={theme.palette.background.default}>
           {children}
