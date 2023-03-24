@@ -1,11 +1,11 @@
-import { Button } from '@mui/material';
 import { useEffect } from 'react';
 import { Route, Routes, Navigate} from 'react-router-dom';
+import { Dashboard } from '../pages';
 import { useDrawer } from '../shared/context';
 
 
 export const AppRoutes: React.FC = () => {
-  const { handleDrawerOpen, handleSetListItemOptions } = useDrawer();
+  const { handleSetListItemOptions } = useDrawer();
 
   useEffect(() => {
     handleSetListItemOptions([{
@@ -22,7 +22,7 @@ export const AppRoutes: React.FC = () => {
 
   return (
     <Routes>
-      <Route path='/pagina-inicial' element={<Button variant='contained' color='primary' onClick={handleDrawerOpen}>Open drawer</Button>}/>
+      <Route path='/pagina-inicial' element={<Dashboard/>}/>
       <Route path='/cidades' element={<p>cidades</p>}/>
       <Route path="*" element={<Navigate to={'/pagina-inicial'}/>}/>
     </Routes>
