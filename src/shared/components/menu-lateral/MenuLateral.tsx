@@ -1,14 +1,44 @@
 import { Box, Drawer, useTheme, Avatar, Divider, List, ListItemButton, Icon, ListItemText, ListItemIcon, useMediaQuery } from '@mui/material';
+import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import { useDrawer } from '../../context';
 
 interface IMenuLateralProps {
     children: React.ReactNode
 }
 
+interface ListItemProps {
+  icon: string;
+  to: string;
+  label: string;
+  onClick: (() => void) | undefined
+}
+
+const ListItem: React.FC<ListItemProps> = ({ icon, label, to, onClick} : ListItemProps) => {
+  const navigate = useNavigate();
+  const resolvePath = useResolvedPath(to);
+  const match = useMatch({path: resolvePath.pathname, end: false});
+
+  const handleClick = () => {
+    navigate(to);
+    onClick?.();
+  };
+
+  return (
+    <ListItemButton onClick={handleClick} selected={!!match}>
+      <ListItemIcon>
+        <Icon>{icon}</Icon>
+      </ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItemButton>
+  );
+};
+
 export const MenuLateral : React.FC<IMenuLateralProps> = ({ children } : IMenuLateralProps) => {
   const theme = useTheme();
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const { isDrawerOpen } = useDrawer();
+  const { isDrawerOpen, handleDrawerOpen, listItemOptions } = useDrawer();
+
+  
 
   return (
     <>
@@ -22,12 +52,9 @@ export const MenuLateral : React.FC<IMenuLateralProps> = ({ children } : IMenuLa
           <Divider/>
           <Box flex={1}>
             <List component="nav">
-              <ListItemButton>
-                <ListItemIcon>
-                  <Icon>home</Icon>
-                </ListItemIcon>
-                <ListItemText primary="Página inicial" />
-              </ListItemButton>
+              {listItemOptions.map((item) => (
+                <ListItem key={item.path} icon={item.icon} label={item.label} to={item.path} onClick={isDownSm ? handleDrawerOpen : undefined}/>
+              ))}
             </List>
           </Box>
         </Box>
