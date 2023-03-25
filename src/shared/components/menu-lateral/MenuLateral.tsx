@@ -1,6 +1,6 @@
 import { Box, Drawer, useTheme, Avatar, Divider, List, ListItemButton, Icon, ListItemText, ListItemIcon, useMediaQuery } from '@mui/material';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
-import { useDrawer } from '../../context';
+import { useDrawer, useThemeContext } from '../../context';
 
 interface IMenuLateralProps {
     children: React.ReactNode
@@ -36,8 +36,8 @@ const ListItem: React.FC<ListItemProps> = ({ icon, label, to, onClick} : ListIte
 export const MenuLateral : React.FC<IMenuLateralProps> = ({ children } : IMenuLateralProps) => {
   const theme = useTheme();
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const { isDrawerOpen, handleDrawerOpen, listItemOptions } = useDrawer();
-
+  const { isDrawerOpen, handleDrawerOpen, listItemOptions } = useDrawer();  
+  const { toggleTheme } = useThemeContext();
   
 
   return (
@@ -57,11 +57,22 @@ export const MenuLateral : React.FC<IMenuLateralProps> = ({ children } : IMenuLa
               ))}
             </List>
           </Box>
+          <Box>
+            <List component="nav">
+              <ListItemButton onClick={toggleTheme}>
+                <ListItemIcon>
+                  <Icon>dark_mode</Icon>
+                </ListItemIcon>
+                <ListItemText primary='Alternar tema' />
+              </ListItemButton>
+            </List>
+          </Box>
         </Box>
       </Drawer>
       <Box height="100vh" marginLeft={(isDownSm) ? 0 : theme.spacing(28)}>
-        {children}
+        {children}        
       </Box>
+      
     </>
   );
 };
