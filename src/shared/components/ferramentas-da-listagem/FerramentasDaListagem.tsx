@@ -1,7 +1,7 @@
 import  SearchIcon  from '@mui/icons-material/Search';
 import { Box, Button, Icon, InputAdornment, Paper, TextField, useTheme } from '@mui/material';
 
-interface IBarraDeFerramentasProps {
+interface IFerramentasDaListagemProps {
   searchValue?: string;
   handleSearch?: (value: string) => void;
   isShowSearch?: boolean;
@@ -10,7 +10,7 @@ interface IBarraDeFerramentasProps {
   isShowNewButton?: boolean;
 }
 
-export const BarraDeFerramentas: React.FC<IBarraDeFerramentasProps> = ({ handleSearch, searchValue, isShowSearch = false, handleNewButton, isShowNewButton = true, newButtonText = 'Novo'} : IBarraDeFerramentasProps) => {
+export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({ handleSearch, searchValue, isShowSearch = false, handleNewButton, isShowNewButton = true, newButtonText = 'Novo'} : IFerramentasDaListagemProps) => {
   const theme = useTheme();
 
   return (
