@@ -13,7 +13,7 @@ interface IAppThemeProviderProps{
     children : React.ReactNode
 }
 
-export const useTheme = () => {
+export const useThemeContext = () => {
   return useContext(ThemeContext);
 };
 
