@@ -12,7 +12,7 @@ interface IFerramentasDaListagemProps {
 
 export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({ handleSearch, searchValue, isShowSearch = false, handleNewButton, isShowNewButton = true, newButtonText = 'Novo'} : IFerramentasDaListagemProps) => {
   const theme = useTheme();
-
+  
   return (
     <Box
       display="flex"

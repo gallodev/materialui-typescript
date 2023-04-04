@@ -1,9 +1,9 @@
 import { LayoutBase } from '../../shared/layouts';
-import { FerramentasDaListagem } from '../../shared/components';
+import { FerramentasDeDetalhe } from '../../shared/components';
 
 export const Dashboard: React.FC = () => {
   return (
-    <LayoutBase title="Página inicial" toolbar={<FerramentasDaListagem isShowSearch/>}>
+    <LayoutBase title="Página inicial" toolbar={<FerramentasDeDetalhe showSaveAndCloseButton/>}>
         testando
     </LayoutBase>
   );
