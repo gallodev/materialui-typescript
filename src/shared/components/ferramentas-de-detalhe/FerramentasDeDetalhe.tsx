@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Paper, useTheme } from '@mui/material';
+import { Box, Button, Icon, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Divider from '@mui/material/Divider';
 
 interface IFerramentasDeDetalhesProps {
@@ -29,6 +29,9 @@ export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalhesProps> = ({
   handleDeleteClick,
 }: IFerramentasDeDetalhesProps) => {
   const theme = useTheme();
+  const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMdDown = useMediaQuery(theme.breakpoints.down('md'));
+
 
   return (
     <Box
@@ -48,17 +51,21 @@ export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalhesProps> = ({
           onClick={handleSaveClick}
           startIcon={<Icon>save</Icon>}
           disableElevation>
+          <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
             Salvar
+          </Typography>
         </Button>
       )}
-      {showSaveAndCloseButton && (
+      {showSaveAndCloseButton && !isMdDown && !isSmDown && (
         <Button 
           color="primary"
           variant='outlined'
           onClick={handleSaveAndCloseClick}
           startIcon={<Icon>save</Icon>}
           disableElevation>
-            Salvar e voltar
+          <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
+              Salvar e voltar
+          </Typography>
         </Button>
       )}
       {showDeleteButton && (
@@ -68,17 +75,21 @@ export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalhesProps> = ({
           onClick={handleDeleteClick}
           startIcon={<Icon>delete</Icon>}
           disableElevation>
+          <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
             Apagar
+          </Typography>
         </Button>
       )}
-      {showNewButton && (
+      {showNewButton && !isSmDown && (
         <Button 
           color="primary"
           variant='outlined'
           startIcon={<Icon>add</Icon>}
           onClick={handleNewClick}
           disableElevation>
-          {newButtonText}
+          <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
+            {newButtonText}
+          </Typography>
         </Button>
       )}
       <Divider variant='middle' orientation='vertical'/>
@@ -89,7 +100,9 @@ export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalhesProps> = ({
           onClick={handleReturnClick}
           startIcon={<Icon>arrow_back</Icon>}
           disableElevation>
+          <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
               Voltar
+          </Typography>
         </Button>
       )}
     </Box>
