@@ -14,5 +14,5 @@ export const Environment = {
   /**
    * Api url
    */
-  base_url: 'localhost:3333'
+  base_url: '//localhost:3333'
 };
