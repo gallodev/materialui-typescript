@@ -6,7 +6,7 @@ export const Environment = {
   /**
    * line limit of default list
    */
-  line_limit: 10,
+  line_limit: 7,
   /**
    * empty list
    */
