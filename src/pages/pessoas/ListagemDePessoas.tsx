@@ -1,30 +1,45 @@
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { LinearProgress, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material';
+
+import { IListagemPessoa, PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { FerramentasDaListagem } from '../../shared/components';
 import { LayoutBase } from '../../shared/layouts';
-import { useEffect, useMemo } from 'react';
-import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { useDebounce } from '../../shared/hooks/useDebounce';
+import { Environment } from '../../shared/environment';
 
 export const ListagemDePessoas: React.FC  = () => {
   const [searchParams,setSearchParams] = useSearchParams();
-  const debounce = useDebounce(1000);
+  const { debounce } = useDebounce(1000);
+
+  const [rows,setRows] = useState<IListagemPessoa[]>([]);
+  const [isLoading,setIsLoading] = useState(true);
+  const [totalCount,setTotalCount] = useState(0);
 
   const search = useMemo(() => {
     return searchParams.get('busca') || '';
   },[searchParams]);
 
+  const page = useMemo(() => {
+    return Number(searchParams.get('pagina') || '1');
+  },[searchParams]);
+
   useEffect(() => {
-    debounce.debounce(() => {
-      PessoasService.getAll(1,search)
+    setIsLoading(true);
+    debounce(() => {
+      PessoasService.getAll(page,search)
         .then((res) => {
+          setIsLoading(false);
           if(res instanceof Error) {
             alert(res.message);
             return;
           }
-          console.log(res);
+          setTotalCount(res.totalCount);
+          setRows(res.data);
         });
     });
-  },[search]);
+
+  },[search, page]);
 
   return (
     <LayoutBase 
@@ -33,10 +48,52 @@ export const ListagemDePessoas: React.FC  = () => {
         isShowSearch 
         newButtonText='Nova'
         searchValue={search}
-        handleSearch={text => setSearchParams({busca: text}, {replace: true})}
-      />
+        handleSearch={text => setSearchParams({busca: text, pagina: '1'}, {replace: true})}
+      />      
       }>
-
+      <TableContainer component={Paper} variant='outlined' sx={{ m: 2, width: 'auto'}}>          
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Ações</TableCell>
+              <TableCell>Nome completo</TableCell>
+              <TableCell>Email</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map(row => (
+              <TableRow key={row.id}>
+                <TableCell>Ações</TableCell>
+                <TableCell>{row.nomeCompleto}</TableCell>
+                <TableCell>{row.email}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          {totalCount === 0 && !isLoading && (
+            <caption>{Environment.empty_list}</caption>
+          )}
+          <TableFooter>
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <LinearProgress variant="indeterminate"/>
+                </TableCell>
+              </TableRow>
+            )}
+            {(totalCount > 0 && totalCount > Environment.line_limit) && (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <Pagination 
+                    page={Number(page)}
+                    count={Math.ceil(totalCount / Environment.line_limit)}
+                    onChange={(_,newPage) => setSearchParams({search, pagina: newPage.toString()}, {replace: true})}
+                  />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableFooter>
+        </Table>
+      </TableContainer>
     </LayoutBase>
   );
 };
