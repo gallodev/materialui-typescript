@@ -45,7 +45,7 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({ h
           <Button 
             color="primary"
             variant='contained'
-            onClick={() => handleNewButton}
+            onClick={handleNewButton}
             endIcon={<Icon>add</Icon>}
             disableElevation>{newButtonText}</Button> 
         )}

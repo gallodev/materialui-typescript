@@ -66,6 +66,7 @@ export const ListagemDePessoas: React.FC  = () => {
         newButtonText='Nova'
         searchValue={search}
         handleSearch={text => setSearchParams({busca: text, pagina: '1'}, {replace: true})}
+        handleNewButton={() => navigate('/pessoas/detalhe/nova')}
       />      
       }>
       <TableContainer component={Paper} variant='outlined' sx={{ m: 2, width: 'auto'}}>          
