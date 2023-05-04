@@ -22,7 +22,7 @@
       "id": 5,
       "nomeCompleto": "Leandra Silva",
       "email": "Silva.leandra@gmail.com",
-      "cidadeId": 1
+      "cidadeId": 3
     },
     {
       "id": 6,
@@ -89,6 +89,44 @@
       "email": "nova.pessoa@gmail.com",
       "cidadeId": "2",
       "id": 17
+    }
+  ],
+  "cidades": [
+    {
+      "nome": "Praia grande",
+      "id": 1
+    },
+    {
+      "nome": "Santos",
+      "id": 2
+    },
+    {
+      "nome": "São Paulo",
+      "id": 3
+    },
+    {
+      "nome": "Jundiaí",
+      "id": 4
+    },
+    {
+      "nome": "Campinas",
+      "id": 5
+    },
+    {
+      "nome": "Rio Grande do sul",
+      "id": 6
+    },
+    {
+      "nome": "Mongagua",
+      "id": 7
+    },
+    {
+      "nome": "Peruibe",
+      "id": 8
+    },
+    {
+      "nome": "Itanhaem",
+      "id": 9
     }
   ]
 }
