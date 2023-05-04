@@ -8,8 +8,9 @@ import { VTextField, VForm, useVForm} from '../../shared/form';
 import { Box, Grid, Paper } from '@mui/material';
 import * as yup from 'yup';
 import { IVFormErrors } from '../../shared/form/IVFormErrors';
+import { AutoCompleteCidade } from '../cidades/components/AutoCompleteCidade';
 
-export interface IFormData {
+interface IFormData {
     email: string;
     cidadeId: number;
     nomeCompleto: string;
@@ -101,6 +102,8 @@ export const DetalheDePessoas: React.FC = () => {
           validationErrors[error.path] = error.message;
         });
 
+        console.log(validationErrors);
+
         formRef.current?.setErrors(validationErrors);
       });
     
@@ -148,11 +151,7 @@ export const DetalheDePessoas: React.FC = () => {
             </Grid>
             <Grid container item direction={'row'}>
               <Grid item xs={12} md={8} lg={6} xl={4}>
-                <VTextField 
-                  fullWidth
-                  disabled={isLoading}
-                  name='cidadeId' 
-                  placeholder='Cidade id'/>
+                <AutoCompleteCidade isExternalLoading={isLoading} />
               </Grid>
             </Grid>
           </Grid>
